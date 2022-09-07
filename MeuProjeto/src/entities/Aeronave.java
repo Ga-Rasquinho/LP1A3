@@ -3,8 +3,8 @@ package entities;
 public class Aeronave {
 	protected String modelo;
 	
-	public Aeronave (String Aeronave) {
-		
+	public Aeronave (String modelo) {
+		this.modelo = modelo;
 	}
 	
 	public String getModelo() {

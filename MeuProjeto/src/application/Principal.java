@@ -2,6 +2,8 @@ package application;
 
 import javax.swing.JOptionPane;
 
+import entities.Aeronave;
+
 public class Principal {
 	
 	public static String menuPrincipal() {		
@@ -32,19 +34,42 @@ public class Principal {
 		return menuReservaPassagens;
 	}
 	
+	public static String cadastroAeronave() {
+		String cadastroAeronave = "";
+		cadastroAeronave = JOptionPane.showInputDialog("Digite o nome da aeronave: ");
+		return cadastroAeronave;
+	}
+	
+	public static void cadastroVoo() {
+		String cadastroVoo = "";
+		cadastroVoo = JOptionPane.showInputDialog("Quantos voos deseja cadastrar?");
+		int qtdVoo = Integer.parseInt(cadastroVoo);
+		int[] voos = new int[qtdVoo];
+		/*Continuar depois o cadastro de Voo */
+		for(int i = 0; i < qtdVoo; i++) {
+			System.out.println("testando");
+		}
+	}
 	public static void main(String[] args) {
-		
+
 		boolean continuarExecutando = true;
 		while (continuarExecutando) {
 			int converterOpcMenuPrincipal = Integer.parseInt(menuPrincipal());
 			switch (converterOpcMenuPrincipal) {
 			case 1:
-				int converteOpcMenuParametro = Integer.parseInt(menuParametroSistema());
+				int opcMenuParametro = Integer.parseInt(menuParametroSistema());
+				switch (opcMenuParametro) {
+				case 1:
+					Aeronave modelo = new Aeronave(cadastroAeronave());
+					break;
+				case 2:
+					cadastroVoo();
+				}
 				break;
 			case 2:
 				int converterOpcMenuPassagens = Integer.parseInt(menuReservaPassagens());
 				break;
-			case 3: 
+			case 3:
 				System.out.println("Saindo");
 				continuarExecutando = false;
 				break;
