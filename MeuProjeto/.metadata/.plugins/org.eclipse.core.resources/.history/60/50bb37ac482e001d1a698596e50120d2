@@ -20,7 +20,7 @@ public class Principal {
 				+ "2 - Cadastrar Voo\n"
 				+ "3 - Voltar");
 		return menuParametroSistema;
-	} 
+	}
 	
 	public static String menuReservaPassagens() {
 		String menuReservaPassagens = "";
