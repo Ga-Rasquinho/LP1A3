@@ -3,6 +3,7 @@ package application;
 import javax.swing.JOptionPane;
 
 import entities.Aeronave;
+import entities.Aviao;
 
 public class Principal {
 	
@@ -40,18 +41,37 @@ public class Principal {
 		return cadastroAeronave;
 	}
 	
+	public static int cadastroFileiras() {
+		String cadastroFileiras = "";
+		cadastroFileiras = JOptionPane.showInputDialog("Digite a quantidade de fileiras: ");
+		int fileira = Integer.parseInt(cadastroFileiras);
+		return fileira;
+	}
+	
+	public static int cadastroQtdCadeiras(){
+		String cadastroQtdCadeiras = "";
+		cadastroQtdCadeiras = JOptionPane.showInputDialog("Digite a quantidade de cadeiras: ");
+		int qtdCadeiras = Integer.parseInt(cadastroQtdCadeiras);
+		return qtdCadeiras;
+	}
+	
+	
 	public static void cadastroVoo() {
 		String cadastroVoo = "";
 		cadastroVoo = JOptionPane.showInputDialog("Quantos voos deseja cadastrar?");
 		int qtdVoo = Integer.parseInt(cadastroVoo);
 		int[] voos = new int[qtdVoo];
-		/*Continuar depois o cadastro de Voo */
+// 		 String nrmVoo = "";
 		for(int i = 0; i < qtdVoo; i++) {
-			System.out.println("testando");
+			String numero = JOptionPane.showInputDialog("Digite o numero do voo: ");
+			int nrmVoo = Integer.parseInt(numero);
+			String data = JOptionPane.showInputDialog("Digite a data: ");
+			String hora = JOptionPane.showInputDialog("Digita a hora: ");
 		}
 	}
 	public static void main(String[] args) {
-
+		Aviao aviao = new Aviao();
+		
 		boolean continuarExecutando = true;
 		while (continuarExecutando) {
 			int converterOpcMenuPrincipal = Integer.parseInt(menuPrincipal());
@@ -60,10 +80,13 @@ public class Principal {
 				int opcMenuParametro = Integer.parseInt(menuParametroSistema());
 				switch (opcMenuParametro) {
 				case 1:
-					Aeronave modelo = new Aeronave(cadastroAeronave());
+					String modelo = cadastroAeronave();
+					int fileira = cadastroFileiras();
+					int qtdCadeira = cadastroQtdCadeiras();
+					aviao = new Aviao(modelo, fileira, qtdCadeira);
 					break;
 				case 2:
-					cadastroVoo();
+					System.out.println(aviao.getModelo());
 				}
 				break;
 			case 2:

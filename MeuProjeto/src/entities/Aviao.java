@@ -3,8 +3,12 @@ package entities;
 public class Aviao extends Aeronave{
 	public Passageiro[][] lugares;
 	
-	public Aviao(String Aeronave, int fileira, int assentos) {
-		super(Aeronave);
+	public Aviao() {
+		
+	}
+	
+	public Aviao(String aeronave, int fileira, int assentos) {
+		super(aeronave);
 		lugares = new Passageiro[fileira][assentos];
 	}
 
