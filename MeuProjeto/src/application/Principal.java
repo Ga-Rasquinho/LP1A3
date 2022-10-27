@@ -1,9 +1,11 @@
 package application;
 
+import java.io.IOException;
+
 import javax.swing.JOptionPane;
 
-import entities.Aeronave;
 import entities.Aviao;
+import entities.Voo;
 
 public class Principal {
 	
@@ -35,7 +37,7 @@ public class Principal {
 		return menuReservaPassagens;
 	}
 	
-	public static String cadastroAeronave() {
+	public static String cadastroAeronave() {		
 		String cadastroAeronave = "";
 		cadastroAeronave = JOptionPane.showInputDialog("Digite o nome da aeronave: ");
 		return cadastroAeronave;
@@ -56,22 +58,20 @@ public class Principal {
 	}
 	
 	
-	public static void cadastroVoo() {
+	public static int cadastroVoo() {
 		String cadastroVoo = "";
 		cadastroVoo = JOptionPane.showInputDialog("Quantos voos deseja cadastrar?");
 		int qtdVoo = Integer.parseInt(cadastroVoo);
-		int[] voos = new int[qtdVoo];
-// 		 String nrmVoo = "";
-		for(int i = 0; i < qtdVoo; i++) {
-			String numero = JOptionPane.showInputDialog("Digite o numero do voo: ");
-			int nrmVoo = Integer.parseInt(numero);
-			String data = JOptionPane.showInputDialog("Digite a data: ");
-			String hora = JOptionPane.showInputDialog("Digita a hora: ");
-		}
+		return qtdVoo;
 	}
-	public static void main(String[] args) {
-		Aviao aviao = new Aviao();
-		
+
+	public static void main(String[] args) throws IOException {
+// Inicializando vetores
+		int qtdAviao = 1;
+		int qtdVoo = 1;
+		Aviao[] aviao = new Aviao[qtdAviao];
+		Voo[] voo = new Voo[qtdVoo];
+
 		boolean continuarExecutando = true;
 		while (continuarExecutando) {
 			int converterOpcMenuPrincipal = Integer.parseInt(menuPrincipal());
@@ -80,13 +80,27 @@ public class Principal {
 				int opcMenuParametro = Integer.parseInt(menuParametroSistema());
 				switch (opcMenuParametro) {
 				case 1:
-					String modelo = cadastroAeronave();
-					int fileira = cadastroFileiras();
-					int qtdCadeira = cadastroQtdCadeiras();
-					aviao = new Aviao(modelo, fileira, qtdCadeira);
+					String cadastroQtdAviao = "";
+					cadastroQtdAviao = JOptionPane.showInputDialog("Quantos aviões deseja cadastrar?");
+					qtdAviao = Integer.parseInt(cadastroQtdAviao);
+					aviao = new Aviao[qtdAviao];
+					for (int i = 0; i < qtdAviao; i++) {
+						String modelo = cadastroAeronave();
+						int fileira = cadastroFileiras();
+						int qtdCadeira = cadastroQtdCadeiras();
+						aviao[i] = new Aviao(modelo, fileira, qtdCadeira);
+					}
 					break;
 				case 2:
-					System.out.println(aviao.getModelo());
+					qtdVoo = cadastroVoo();
+					voo = new Voo[qtdVoo];
+					for (int x = 0; x < qtdVoo; x++) {
+						String numero = JOptionPane.showInputDialog("Digite o numero do voo: ");
+						int nrmVoo = Integer.parseInt(numero);
+						String data = JOptionPane.showInputDialog("Digite a data: ");
+						String hora = JOptionPane.showInputDialog("Digita a hora: ");
+						voo[x] = new Voo(aviao[x], nrmVoo, data, hora);
+					}
 				}
 				break;
 			case 2:
