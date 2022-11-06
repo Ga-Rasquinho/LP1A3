@@ -8,7 +8,7 @@ public class Aeronave {
 	}
 	
 	public Aeronave (String modelo) {
-		this.modelo = modelo;
+ 		this.modelo = modelo;
 	}
 	
 	public String getModelo() {

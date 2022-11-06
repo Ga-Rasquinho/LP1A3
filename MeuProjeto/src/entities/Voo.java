@@ -16,7 +16,7 @@ public class Voo {
 	public int getNro() {
 		return nro;
 	}
-
+	
 	public String getData() {
 		return data;
 	}
@@ -24,6 +24,5 @@ public class Voo {
 	public String getHora() {
 		return hora;
 	}
-	
-	
+		
 }

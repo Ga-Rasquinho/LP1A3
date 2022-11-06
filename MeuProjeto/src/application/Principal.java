@@ -5,6 +5,7 @@ import java.io.IOException;
 import javax.swing.JOptionPane;
 
 import entities.Aviao;
+import entities.Passageiro;
 import entities.Voo;
 
 public class Principal {
@@ -67,9 +68,10 @@ public class Principal {
 
 	public static void main(String[] args) throws IOException {
 // Inicializando vetores
-		int qtdAviao = 1;
 		int qtdVoo = 1;
-		Aviao[] aviao = new Aviao[qtdAviao];
+		int fileira = 0;
+		int assento = 0;
+		Aviao aviao = new Aviao();
 		Voo[] voo = new Voo[qtdVoo];
 
 		boolean continuarExecutando = true;
@@ -80,16 +82,10 @@ public class Principal {
 				int opcMenuParametro = Integer.parseInt(menuParametroSistema());
 				switch (opcMenuParametro) {
 				case 1:
-					String cadastroQtdAviao = "";
-					cadastroQtdAviao = JOptionPane.showInputDialog("Quantos aviões deseja cadastrar?");
-					qtdAviao = Integer.parseInt(cadastroQtdAviao);
-					aviao = new Aviao[qtdAviao];
-					for (int i = 0; i < qtdAviao; i++) {
-						String modelo = cadastroAeronave();
-						int fileira = cadastroFileiras();
-						int qtdCadeira = cadastroQtdCadeiras();
-						aviao[i] = new Aviao(modelo, fileira, qtdCadeira);
-					}
+					String modelo = cadastroAeronave();
+					fileira = cadastroFileiras();
+					assento = cadastroQtdCadeiras();
+					aviao = new Aviao(modelo, fileira, assento);
 					break;
 				case 2:
 					qtdVoo = cadastroVoo();
@@ -99,12 +95,49 @@ public class Principal {
 						int nrmVoo = Integer.parseInt(numero);
 						String data = JOptionPane.showInputDialog("Digite a data: ");
 						String hora = JOptionPane.showInputDialog("Digita a hora: ");
-						voo[x] = new Voo(aviao[x], nrmVoo, data, hora);
+						voo[x] = new Voo(aviao, nrmVoo, data, hora);
 					}
 				}
 				break;
 			case 2:
 				int converterOpcMenuPassagens = Integer.parseInt(menuReservaPassagens());
+				switch (converterOpcMenuPassagens) {
+				case 1:
+					String vooDisponiveis = "Voos disponíveis: \n";
+					for (int qtdVooDisponiveis = 0; qtdVooDisponiveis < voo.length; qtdVooDisponiveis++) {
+						String voos = "\nNúmero do Voo: " + voo[qtdVooDisponiveis].getNro() + " Data: "
+								+ voo[qtdVooDisponiveis].getData() + " Horário: " + voo[qtdVooDisponiveis].getHora();
+						vooDisponiveis = vooDisponiveis.concat(voos);
+					}
+
+					// String selecVoo = JOptionPane.showInputDialog(vooDisponiveis + "\n\nSelecione
+					// o número do voo: ");
+
+					if (aviao.consultarLugaresDisponiveis() == null) {
+						JOptionPane.showMessageDialog(null, "Não há lugares disponíveis");
+						break;
+					}
+
+					String opcFileira = JOptionPane
+							.showInputDialog(aviao.consultarLugaresDisponiveis() + "\nDigite a fileira:");
+					String opcAssento = JOptionPane
+							.showInputDialog(aviao.consultarLugaresDisponiveis() + "\nDigite o assento:");
+					int selecFileira = Integer.parseInt(opcFileira);
+					int selecAssento = Integer.parseInt(opcAssento);
+
+					String nomePassageiro = JOptionPane.showInputDialog("Digite seu nome: ");
+					String cpfPassageiro = JOptionPane.showInputDialog("Digite seu CPF: ");
+					Passageiro passageiro = new Passageiro(nomePassageiro, cpfPassageiro);
+
+					aviao.setPassageiro(selecFileira, selecAssento, passageiro);
+					break;
+				case 2:
+					JOptionPane.showMessageDialog(null, aviao.consultarLugaresDisponiveis());
+					break;
+				case 3:
+					JOptionPane.showMessageDialog(null, aviao.consultarLugaresOcupados());
+					break;
+				}
 				break;
 			case 3:
 				System.out.println("Saindo");
