@@ -65,13 +65,19 @@ public class Principal {
 		int qtdVoo = Integer.parseInt(cadastroVoo);
 		return qtdVoo;
 	}
+	
+	public static void alterarPassageiro() {
+		
+	}
 
 	public static void main(String[] args) throws IOException {
 // Inicializando vetores
-		int qtdVoo = 1;
+		String modelo = "";
 		int fileira = 0;
 		int assento = 0;
-		Aviao aviao = new Aviao();
+		int qtdVoo = 1;
+		Aviao aviao = null;
+//		Aviao aviao = new Aviao();
 		Voo[] voo = new Voo[qtdVoo];
 
 		boolean continuarExecutando = true;
@@ -82,10 +88,9 @@ public class Principal {
 				int opcMenuParametro = Integer.parseInt(menuParametroSistema());
 				switch (opcMenuParametro) {
 				case 1:
-					String modelo = cadastroAeronave();
+					modelo = cadastroAeronave();
 					fileira = cadastroFileiras();
 					assento = cadastroQtdCadeiras();
-					aviao = new Aviao(modelo, fileira, assento);
 					break;
 				case 2:
 					qtdVoo = cadastroVoo();
@@ -95,7 +100,7 @@ public class Principal {
 						int nrmVoo = Integer.parseInt(numero);
 						String data = JOptionPane.showInputDialog("Digite a data: ");
 						String hora = JOptionPane.showInputDialog("Digita a hora: ");
-						voo[x] = new Voo(aviao, nrmVoo, data, hora);
+						voo[x] = new Voo(new Aviao(modelo, fileira, assento), nrmVoo, data, hora);
 					}
 				}
 				break;
@@ -110,8 +115,15 @@ public class Principal {
 						vooDisponiveis = vooDisponiveis.concat(voos);
 					}
 
-					// String selecVoo = JOptionPane.showInputDialog(vooDisponiveis + "\n\nSelecione
-					// o número do voo: ");
+					 String opcVoo = JOptionPane.showInputDialog(vooDisponiveis + "\n\nSelecione o número do voo: ");
+					 int selecVoo = Integer.parseInt(opcVoo);
+					 
+
+					 for(int selecAviao = 0; selecAviao < selecVoo; selecAviao++) {
+						 	if(voo[selecAviao].getNro() == selecVoo) {
+						 		aviao = voo[selecAviao].getAeronave();
+						 	}
+					 }
 
 					if (aviao.consultarLugaresDisponiveis() == null) {
 						JOptionPane.showMessageDialog(null, "Não há lugares disponíveis");
@@ -127,7 +139,8 @@ public class Principal {
 
 					String nomePassageiro = JOptionPane.showInputDialog("Digite seu nome: ");
 					String cpfPassageiro = JOptionPane.showInputDialog("Digite seu CPF: ");
-					Passageiro passageiro = new Passageiro(nomePassageiro, cpfPassageiro);
+					Passageiro passageiro = new Passageiro(nomePassageiro, cpfPassageiro);					
+					
 
 					aviao.setPassageiro(selecFileira, selecAssento, passageiro);
 					break;

@@ -24,5 +24,8 @@ public class Voo {
 	public String getHora() {
 		return hora;
 	}
-		
+	
+	public Aviao getAeronave() {
+		return aeronave;
+	}
 }
