@@ -1,8 +1,8 @@
 package entities;
 
 public class Aviao extends Aeronave {
-	public int fileira;
-	public int assentos;
+	private int fileira;
+	private int assentos;
 	public Passageiro[][] lugares;
 
 	public Aviao() {
@@ -31,32 +31,57 @@ public class Aviao extends Aeronave {
 			return false;
 		}
 	}
-
-	public String consultarLugaresDisponiveis() {
-		String lugaresDisponiveis = "Lugares Disponíveis";
+	
+	public boolean existemLugaresDisponiveis() {
+		boolean lugaresDisponiveis = false;
 		for (int i = 0; i < fileira; i++) {
 			for (int x = 0; x < assentos; x++) {
 				if (verificarLugarOcupado(i, x) == true) {
-					String consultaLugares = "\nFileira: [" + i + "]" + " Assento: [" + x + "]";
-					lugaresDisponiveis = lugaresDisponiveis.concat(consultaLugares);
-				} else {
-					lugaresDisponiveis = null;
+					lugaresDisponiveis = true;
+					break;
 				}
 			}
 		}
 		return lugaresDisponiveis;
 	}
+	
+	public String consultarLugaresDisponiveis() {
+		String lugaresDisponiveis = "Lugares disponíveis nesse voo: ";
+		int contLugaresDisponiveis = 0;
+		for (int i = 0; i < fileira; i++) {
+			for (int x = 0; x < assentos; x++) {
+				if (verificarLugarOcupado(i, x) == true) {
+					String consultaLugares = "\nFileira: [" + i + "]" + " Assento: [" + x + "]";
+					lugaresDisponiveis = lugaresDisponiveis.concat(consultaLugares);
+					contLugaresDisponiveis++;
+				}
+			}
+		}
+		if (contLugaresDisponiveis == 0) {
+			lugaresDisponiveis = null;
+			return lugaresDisponiveis;
+		} else {
+			return lugaresDisponiveis;
+		}
+	}
 
 	public String consultarLugaresOcupados() {
-		String lugaresOcupados = "Lugares Reservados";
+		String lugaresOcupados = "Lugares reservados nesse voo: ";
+		int contarLugaresOcupados = 0;
 		for (int i = 0; i < fileira; i++) {
 			for (int x = 0; x < assentos; x++) {
 				if (verificarLugarOcupado(i, x) == false) {
 					String consultaLugares = "\nFileira: [" + i + "]" + " Assento: [" + x + "]";
 					lugaresOcupados = lugaresOcupados.concat(consultaLugares);
+					contarLugaresOcupados++;
 				}
 			}
 		}
-		return lugaresOcupados;
+		if (contarLugaresOcupados == 0) {
+			return lugaresOcupados = "Ainda não reservaram lugares nesse voo";
+		} else {
+			return lugaresOcupados;
+		}
+		
 	}
 }
