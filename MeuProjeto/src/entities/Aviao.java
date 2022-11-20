@@ -20,9 +20,9 @@ public class Aviao extends Aeronave {
 		return lugares[fileira][assentos];
 	}
 
-	public void setPassageiro(int fileira, int assentos, final Passageiro passageiro) {
+	public void setPassageiro(int fileira, int assentos, Passageiro passageiro) {
 		lugares[fileira][assentos] = passageiro;
-	}
+	}	
 
 	public boolean verificarLugarOcupado(int fileira, int assentos) {
 		if (lugares[fileira][assentos] == null) {

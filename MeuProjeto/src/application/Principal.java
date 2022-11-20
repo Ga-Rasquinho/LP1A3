@@ -1,4 +1,5 @@
-// Disciplina: Projeto para a disciplina LP1A3
+// Gabriel Fernandes Rasquinho - SP3084094
+// Projeto para a disciplina LP1A3
 
 package application;
 
@@ -69,9 +70,9 @@ public class Principal {
 		}
 		String opcVoo = vooDisponiveis + "\n\nSelecione o número do voo: ";
 		int selecVoo = verificarDigito(opcVoo);
-		
-		while(selecVoo > voo.length) {
-			JOptionPane.showMessageDialog(null, "Número inválido");			
+
+		while (selecVoo > voo.length) {
+			JOptionPane.showMessageDialog(null, "Número inválido");
 			opcVoo = vooDisponiveis + "\n\nSelecione o número do voo: ";
 			selecVoo = verificarDigito(opcVoo);
 		}
@@ -87,7 +88,7 @@ public class Principal {
 		}
 		return aviao;
 	}
-	
+
 	public static void realizarReservaPassagem(Voo[] voo) {
 
 		int selecVoo = mostrarVoo(voo);
@@ -98,20 +99,28 @@ public class Principal {
 			JOptionPane.showMessageDialog(null, "Não há lugares disponíveis");
 			return;
 		}
+		boolean sucessoReserva = false;
+		while (!sucessoReserva) {
+			try {
+				String opcFileira = aviao.consultarLugaresDisponiveis() + "\nDigite a fileira:";
+				String opcAssento = aviao.consultarLugaresDisponiveis() + "\nDigite o assento:";
+				int selecFileira = verificarDigito(opcFileira);
+				int selecAssento = verificarDigito(opcAssento);
 
-		String opcFileira = aviao.consultarLugaresDisponiveis() + "\nDigite a fileira:";
-		String opcAssento = aviao.consultarLugaresDisponiveis() + "\nDigite o assento:";
-		int selecFileira = verificarDigito(opcFileira);
-		int selecAssento = verificarDigito(opcAssento);
-		
+				aviao.setPassageiro(selecFileira, selecAssento, null);
 
-		String nomePassageiro = JOptionPane.showInputDialog("Digite seu nome: ");
-		String cpfPassageiro = JOptionPane.showInputDialog("Digite seu CPF: ");
-		Passageiro passageiro = new Passageiro(nomePassageiro, cpfPassageiro);
+				String nomePassageiro = JOptionPane.showInputDialog("Digite seu nome: ");
+				String cpfPassageiro = JOptionPane.showInputDialog("Digite seu CPF: ");
+				Passageiro passageiro = new Passageiro(nomePassageiro, cpfPassageiro);
 
-		aviao.setPassageiro(selecFileira, selecAssento, passageiro);
+				aviao.setPassageiro(selecFileira, selecAssento, passageiro);
+				sucessoReserva = true;
+			} catch (ArrayIndexOutOfBoundsException e) {
+				JOptionPane.showMessageDialog(null, "Lugar inválido");
+			}
+		}
 	}
-
+	
 	public static int verificarDigito(String texto) {
 		int valorConvertido = 0;
 		boolean sucesso = false;
@@ -122,6 +131,8 @@ public class Principal {
 				sucesso = true;
 			} catch (NumberFormatException e) {
 				JOptionPane.showMessageDialog(null, "Digite apenas números inteiros");
+			} catch (ArrayIndexOutOfBoundsException e) {
+				JOptionPane.showMessageDialog(null, "Digite um lugar válido");
 			}
 		}
 		return valorConvertido;
